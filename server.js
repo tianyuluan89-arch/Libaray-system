@@ -27,6 +27,13 @@ app.post('/api/borrow', (req, res) => {
 });
 
 const PORT = 3000;
+app.post('/api/return', (req, res) => {
+    const bookId = req.body.bookId;
+    const book = books.find(b => b.id === bookId);
+    if (!book) return res.status(404).json({ error: "Book not found" });
+    book.status = "AVAILABLE";
+    res.status(200).json({ message: "Returned successfully" });
+});
 app.listen(PORT, () => {
     console.log("Server is running on port 3000");
 });
