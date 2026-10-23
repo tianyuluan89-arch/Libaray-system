@@ -10,7 +10,12 @@ let books = [
 app.get('/api/books', (req, res) => {
     res.status(200).json(books);
 });
-
+// 获取单本书
+app.get('/api/books/:id', (req, res) => {
+    const book = books.find(b => b.id === parseInt(req.params.id));
+    if (!book) return res.status(404).json({ error: "Book not found" });
+    res.status(200).json(book);
+});
 app.post('/api/borrow', (req, res) => {
     const bookId = req.body.bookId;
     const book = books.find(b => b.id === bookId);
