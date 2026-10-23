@@ -16,6 +16,12 @@ app.get('/api/books/:id', (req, res) => {
     if (!book) return res.status(404).json({ error: "Book not found" });
     res.status(200).json(book);
 });
+// 添加新书
+app.post('/api/books', (req, res) => {
+    const newBook = { id: books.length + 1, title: req.body.title, status: "AVAILABLE" };
+    books.push(newBook);
+    res.status(201).json(newBook);
+});
 app.post('/api/borrow', (req, res) => {
     const bookId = req.body.bookId;
     const book = books.find(b => b.id === bookId);
